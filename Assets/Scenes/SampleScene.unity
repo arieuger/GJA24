@@ -123,6 +123,111 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &502324734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 502324736}
+  - component: {fileID: 502324735}
+  m_Layer: 0
+  m_Name: Roads
+  m_TagString: Roads
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!60 &502324735
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502324734}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.1570921, y: 1.2429612}
+      - {x: -1.829453, y: 3.5316682}
+      - {x: 1.6513038, y: 4.283176}
+      - {x: 1.9794879, y: 3.7232718}
+      - {x: 2.863461, y: 4.063282}
+      - {x: 2.167197, y: 5.188358}
+      - {x: -2.8928485, y: 4.107355}
+      - {x: -4.4564223, y: 4.309182}
+      - {x: -4.563592, y: 3.4682288}
+      - {x: -3.5531487, y: 3.5155418}
+      - {x: -3.2060976, y: 3.4278991}
+      - {x: -2.9172568, y: 3.219068}
+      - {x: -2.1602182, y: 2.0120404}
+      - {x: -4.242897, y: 1.9245182}
+      - {x: -4.5877986, y: 0.40771663}
+      - {x: -2.331585, y: 0.55658317}
+      - {x: -1.893342, y: 0.12995183}
+      - {x: -1.3268027, y: -1.507}
+      - {x: -0.9933896, y: -2.0124116}
+      - {x: 0.37558603, y: -2.029109}
+      - {x: 3.5496929, y: -1.3941679}
+      - {x: 3.3451033, y: -0.7043843}
+      - {x: -0.75409603, y: -1.5822816}
+      - {x: -1.290678, y: 0.4377452}
+      - {x: 2.8202527, y: 1.3222975}
+      - {x: 2.9189308, y: 4.063574}
+      - {x: 2.0568266, y: 3.7106357}
+      - {x: 1.9278946, y: 2.04819}
+  m_UseDelaunayMesh: 0
+--- !u!4 &502324736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502324734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.6171117, y: -1.374351, z: 0.050493695}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,6 +476,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3607ad96a7707d4b187d7ac043b56f4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roadCollliders:
+  - {fileID: 502324735}
   originPosition: {fileID: 1270522754}
   width: 18
   height: 10
@@ -598,3 +705,4 @@ SceneRoots:
   - {fileID: 2113837332}
   - {fileID: 1645436621}
   - {fileID: 869190875}
+  - {fileID: 502324736}

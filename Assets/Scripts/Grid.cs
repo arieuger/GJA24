@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Grid
@@ -9,7 +10,7 @@ public class Grid
     private int _height;
     private float _cellSize;
     private Vector3 _originPosition;
-    private int[,] _gridArray;
+    private Cell[,] _gridArray;
 
     public Grid(int width, int height, float cellSize, Vector3 originPosition)
     {
@@ -18,34 +19,49 @@ public class Grid
         this._cellSize = cellSize;
         this._originPosition = originPosition;
 
-        this._gridArray = new int[width, height];
+        this._gridArray = new Cell[width, height];
 
         for (int x = 0; x < _gridArray.GetLength(0); x++)
         {
             for (int y = 0; y < _gridArray.GetLength(1); y++)
             {
+                _gridArray[x, y] = new Cell(x, y);
+
+                _gridArray[x, y].Usable = !GridManager.Instance.IsCollidingWithRoad(GetWorldPosition(x, y)/* + new Vector3(_cellSize, _cellSize) * .5f*/);
                 // UtilsClass.CreateWorldText(_gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 50, Color.white, TextAnchor.MiddleCenter);
-                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);    // Print bottom
-                Debug.DrawLine(GetWorldPosition(x + 1, y), GetWorldPosition(x, y), Color.white, 100f);    // Print left
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), _gridArray[x, y].Usable ? Color.white : Color.red, 100f);    // Print bottom
+                Debug.DrawLine(GetWorldPosition(x + 1, y), GetWorldPosition(x, y), _gridArray[x, y].Usable ?  Color.white : Color.red, 100f);    // Print left
             }
         }
         
         Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
         Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
+
         
     }
 
-    public void SetValue(int x, int y, int value)
+    public void DrawCenterOfCells()
     {
-        if (x >= 0 && y >= 0 && x < _width && y < _height) _gridArray[x, y] = value;
+        foreach (Cell cell in _gridArray)
+        {
+            if (!cell.Usable)
+            {
+                Gizmos.DrawIcon(GetWorldPosition(cell.XPosition, cell.YPosition) + new Vector3(_cellSize, _cellSize) * .5f, "");
+            }
+        }
     }
 
-    public void SetValue(Vector3 worldPosition, int value)
-    {
-        int x, y;
-        GetXY(worldPosition, out x, out y);
-        SetValue(x, y, value);
-    }
+    // public void SetValue(int x, int y, int value)
+    // {
+    //     if (x >= 0 && y >= 0 && x < _width && y < _height) _gridArray[x, y] = value;
+    // }
+
+    // public void SetValue(Vector3 worldPosition, int value)
+    // {
+    //     int x, y;
+    //     GetXY(worldPosition, out x, out y);
+    //     SetValue(x, y, value);
+    // }
 
     private Vector3 GetWorldPosition(int x, int y)
     {
