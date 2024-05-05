@@ -27,7 +27,7 @@ public class Grid
             {
                 _gridArray[x, y] = new Cell(x, y);
 
-                _gridArray[x, y].Usable = !GridManager.Instance.IsCollidingWithRoad(GetWorldPosition(x, y)/* + new Vector3(_cellSize, _cellSize) * .5f*/);
+                _gridArray[x, y].Usable = !GridManager.Instance.IsCollidingWithRoad(GetWorldPosition(x, y));
                 // UtilsClass.CreateWorldText(_gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 50, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), _gridArray[x, y].Usable ? Color.white : Color.red, 100f);    // Print bottom
                 Debug.DrawLine(GetWorldPosition(x + 1, y), GetWorldPosition(x, y), _gridArray[x, y].Usable ?  Color.white : Color.red, 100f);    // Print left
@@ -46,7 +46,7 @@ public class Grid
         {
             if (!cell.Usable)
             {
-                Gizmos.DrawIcon(GetWorldPosition(cell.XPosition, cell.YPosition) + new Vector3(_cellSize, _cellSize) * .5f, "");
+                Gizmos.DrawIcon(GetCenteredWorldPosition(cell.XPosition, cell.YPosition), "", false, Color.red);
             }
         }
     }
@@ -66,6 +66,11 @@ public class Grid
     private Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * _cellSize + _originPosition;
+    }
+
+    private Vector3 GetCenteredWorldPosition(int x, int y)
+    {
+        return GetWorldPosition(x, y) + new Vector3(_cellSize, _cellSize) * 0.5f;
     }
 
     private void GetXY(Vector3 worldPosition, out int x, out int y)
