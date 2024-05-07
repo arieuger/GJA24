@@ -8,10 +8,11 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance { get; private set; }
 
     private Grid grid;
-    [SerializeField] private List<PolygonCollider2D> roadCollliders;
+    [SerializeField] private PolygonCollider2D roadCollliders;
     [SerializeField] private Transform originPosition;
     [SerializeField] private int width;
     [SerializeField] private int height;
+    [SerializeField] private float cellSize;
     
     private void Awake()
     {
@@ -21,18 +22,16 @@ public class GridManager : MonoBehaviour
     
     void Start()
     {
-        grid = new Grid(width, height, 1f, originPosition.position);
+        grid = new Grid(width, height, cellSize, originPosition.position);
     }
 
     public bool IsCollidingWithRoad(Vector3 gridPosition)
     {
-        foreach (PolygonCollider2D roadCollider in roadCollliders)
-        {
-            // if (roadCollider.OverlapPoint(gridPosition)) return true;
-            Collider2D overlapArea = Physics2D.OverlapArea(gridPosition, gridPosition + new Vector3(1f, 1f));
-            if (overlapArea != null && overlapArea.tag.Equals("Roads"))
-                return true;
-        }
+
+        // if (roadCollider.OverlapPoint(gridPosition)) return true;
+        Collider2D overlapArea = Physics2D.OverlapArea(gridPosition, gridPosition + new Vector3(cellSize, cellSize));
+        if (overlapArea != null && overlapArea.tag.Equals("Roads"))
+            return true;
 
         return false;
     }
