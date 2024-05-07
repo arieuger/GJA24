@@ -27,10 +27,13 @@ public class Grid
             {
                 _gridArray[x, y] = new Cell(x, y);
 
+                /*
                 _gridArray[x, y].Usable = !GridManager.Instance.IsCollidingWithRoad(GetWorldPosition(x, y));
-                // UtilsClass.CreateWorldText(_gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * .5f, 50, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), _gridArray[x, y].Usable ? Color.white : Color.red, 100f);    // Print bottom
                 Debug.DrawLine(GetWorldPosition(x + 1, y), GetWorldPosition(x, y), _gridArray[x, y].Usable ?  Color.white : Color.red, 100f);    // Print left
+                */
+                Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);    // Print bottom
+                Debug.DrawLine(GetWorldPosition(x + 1, y), GetWorldPosition(x, y), Color.white, 100f);    // Print left
             }
         }
         
@@ -46,7 +49,7 @@ public class Grid
         {
             if (!cell.Usable)
             {
-                Gizmos.DrawIcon(GetCenteredWorldPosition(cell.XPosition, cell.YPosition), "", false, Color.red);
+                Gizmos.DrawSphere(GetCenteredWorldPosition(cell.XPosition, cell.YPosition), 0.075f);
             }
         }
     }

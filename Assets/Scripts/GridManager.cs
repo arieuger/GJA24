@@ -38,7 +38,7 @@ public class GridManager : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        grid.DrawCenterOfCells();
+    //    if (Application.IsPlaying(this)) grid.DrawCenterOfCells();
     }
 
     private void Update()
