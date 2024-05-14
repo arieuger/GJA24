@@ -6,9 +6,10 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Transform goal;
     private NavMeshAgent _agent;
     private float _originalSpeed;
+    private bool _isDestructing;
+    
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -16,8 +17,6 @@ public class PlayerMovement : MonoBehaviour
         _agent.updateUpAxis = false;
 
         _originalSpeed = _agent.speed;
-
-        // agent.destination = goal.position;
     }
 
     // Update is called once per frame
@@ -29,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
-        Debug.Log(_agent.speed);
+        // Debug.Log(_isDestructing);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -37,6 +36,10 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed * 1.5f;
+        } else if (other.tag.Equals("DestructionZone"))
+        {
+            if (!_isDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
+            _isDestructing = true;
         }
     }
 
@@ -45,6 +48,10 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed;
+        } else if (other.tag.Equals("DestructionZone"))
+        {
+            if (_isDestructing) other.gameObject.GetComponentInParent<Building>().StopDestruction();
+            _isDestructing = false;
         }
     }
 }
