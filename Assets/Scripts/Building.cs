@@ -10,10 +10,12 @@ public class Building : MonoBehaviour
     [SerializeField] private Slider slider;
 
     private float _remainingDestruction;
+    private IEnumerator _destructionCo;
     
     void Start()
     {
         _remainingDestruction = destructionTime;
+        _destructionCo = StartDestructionCo();
     }
     
     void Update()
@@ -23,7 +25,7 @@ public class Building : MonoBehaviour
 
     public void StartDestruction()
     {
-        StartCoroutine(StartDestructionCo());
+        StartCoroutine(_destructionCo);
     }
 
     private IEnumerator StartDestructionCo()
@@ -39,13 +41,13 @@ public class Building : MonoBehaviour
         if (_remainingDestruction <= 0.01f)
         {
             Destroy(gameObject);
-            // TODO: Reload NavMesh
+            NavMeshManager.Instance.UpdateNavMesh();
         }
     }
     
     public void StopDestruction()
     {
-        
+        StopCoroutine(_destructionCo);
     }
     
     

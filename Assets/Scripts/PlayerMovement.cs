@@ -18,8 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
         _originalSpeed = _agent.speed;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -28,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
-        // Debug.Log(_isDestructing);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
