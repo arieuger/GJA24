@@ -20,10 +20,12 @@ public class NavMeshManager : MonoBehaviour
     private void Start()
     {
         _surface = GetComponent<NavMeshSurface>();
+        UpdateNavMesh();
     }
 
     public void UpdateNavMesh()
     {
+       Physics2D.SyncTransforms();
        _surface.UpdateNavMesh(_surface.navMeshData);
     }
     
