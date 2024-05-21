@@ -17,6 +17,7 @@ public class Police : MonoBehaviour
     private PlayerMovement _playerMovement;
     private float _originalSpeed;
     private bool _justCharged;
+    private bool _chargedAndExited;
     
     void Start()
     {
@@ -42,34 +43,37 @@ public class Police : MonoBehaviour
         {
             if (!_justCharged)
             {
-                _agent.ResetPath();
-                _playerAgent.ResetPath();
-                _justCharged = true;
-
-                Vector3 positionOffset = transform.position - player.transform.position;
-                positionOffset.z = 0;
-                _playerMovement.isBeingCharged = true;
-
-                Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.red, Mathf.Infinity);
-                player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
-
-                StartCoroutine(Discharge());
-                StartCoroutine(StopPlayerChargeMovement());
-                
+                ChargeAgainstPlayer();
             }
         }
     }
 
-    private IEnumerator StopPlayerChargeMovement()
+    private void OnTriggerExit2D(Collider2D other)
     {
-        float remainingTime = chargeDuration - 0.05f;
-        while (remainingTime > 0f)
+        if (other.tag.Equals("Roads"))
         {
-            remainingTime -= Time.deltaTime;
-            yield return null;            
+            _agent.speed = _originalSpeed;
         }
+    }
 
-        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    private void ChargeAgainstPlayer()
+    {
+        _agent.ResetPath();
+        _playerAgent.ResetPath();
+        _justCharged = true;
+
+        Vector3 positionOffset = transform.position - player.transform.position;
+        positionOffset.z = 0;
+        _playerMovement.isBeingCharged = true;
+
+        Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.red, Mathf.Infinity);
+        Debug.DrawRay(transform.position, positionOffset * 1.3f, Color.blue, Mathf.Infinity);
+        // TODO: Policía hacia atrás ata positionOffset * 1.3 para salir de player trigger ou:
+        // Temporizador para saber se has exited desde charged e se non chamar dende update
+                
+        player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
+
+        StartCoroutine(Discharge());
     }
 
     private IEnumerator Discharge()
@@ -81,17 +85,9 @@ public class Police : MonoBehaviour
             yield return null;            
         }
 
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         _playerMovement.isBeingCharged = false;
         _justCharged = false;
-    }
-
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag.Equals("Roads"))
-        {
-            _agent.speed = _originalSpeed;
-        }
     }
 
     private IEnumerator StartChasingPlayer()
@@ -108,4 +104,5 @@ public class Police : MonoBehaviour
             else yield return null;
         }
     }
+    
 }
