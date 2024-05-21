@@ -55,6 +55,8 @@ public class Police : MonoBehaviour
         _agent.destination = new Vector3(-7f, 3.5f);
         _playerMovement.isBeingCharged = true;
 
+        Debug.DrawRay(transform.position, positionOffset.normalized * -10, Color.blue, Mathf.Infinity);
+        
         while (remainingTime > 0f)
         {
             player.transform.position = transform.position - positionOffset;
