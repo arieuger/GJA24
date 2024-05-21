@@ -3,14 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
     private NavMeshAgent _agent;
     private float _originalSpeed;
     private bool _isDestructing;
+    [HideInInspector] public bool isBeingCharged;
     
-    void Start()
+    private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
@@ -19,15 +21,16 @@ public class PlayerMovement : MonoBehaviour
         _originalSpeed = _agent.speed;
     }
     
-    void Update()
+    private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isBeingCharged)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -39,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
             if (!_isDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
             _isDestructing = true;
         }
+        
     }
 
     private void OnTriggerExit2D(Collider2D other)

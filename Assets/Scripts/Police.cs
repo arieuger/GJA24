@@ -9,10 +9,13 @@ public class Police : MonoBehaviour
 {
 
     [SerializeField] private GameObject player;
+    [SerializeField] private float chargeDuration;
     
     private NavMeshAgent _agent;
+    private NavMeshAgent _playerAgent;
+    private PlayerMovement _playerMovement;
     private float _originalSpeed;
-    private bool _chasingStarted;
+    private bool _justCharged;
     
     void Start()
     {
@@ -21,12 +24,11 @@ public class Police : MonoBehaviour
         _agent.updateUpAxis = false;
 
         _originalSpeed = _agent.speed;
-        StartCoroutine(StartChasingPlayer());
-    }
 
-    private void Update()
-    {
+        _playerAgent = player.GetComponent<NavMeshAgent>();
+        _playerMovement = player.GetComponent<PlayerMovement>();
         
+        StartCoroutine(StartChasingPlayer());
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,6 +37,35 @@ public class Police : MonoBehaviour
         {
             _agent.speed = _originalSpeed * 1.5f;
         } 
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            if (!_justCharged)
+            {
+                StartCoroutine(ChargeOnPlayer());
+            }
+        }
+    }
+
+    private IEnumerator ChargeOnPlayer()
+    {
+        _justCharged = true;
+        float remainingTime = chargeDuration;
+
+        Vector3 positionOffset = transform.position - player.transform.position;
+        _agent.destination = new Vector3(-7f, 3.5f);
+        _playerMovement.isBeingCharged = true;
+
+        while (remainingTime > 0f)
+        {
+            player.transform.position = transform.position - positionOffset;
+            _playerAgent.destination = transform.position - positionOffset;
+            
+            remainingTime -= Time.deltaTime;
+            yield return null;            
+        }
+
+        _justCharged = false;
+        _playerMovement.isBeingCharged = false;
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -43,17 +74,24 @@ public class Police : MonoBehaviour
         {
             _agent.speed = _originalSpeed;
         }
+        if (other.gameObject.tag.Equals("Player"))
+        {
+            _justCharged = false;
+        }
     }
 
     private IEnumerator StartChasingPlayer()
     {
         yield return new WaitForSeconds(3f);
-        _chasingStarted = true;
 
-        while (_chasingStarted)
+        while (true)
         {
-            _agent.destination = player.transform.position;
-            yield return new WaitForSeconds(1.5f);
+            if (!_justCharged)
+            {
+                _agent.destination = player.transform.position;
+                yield return new WaitForSeconds(0.5f);
+            }
+            else yield return null;
         }
     }
 }
