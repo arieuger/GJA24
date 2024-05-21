@@ -41,46 +41,42 @@ public class Police : MonoBehaviour
         {
             if (!_justCharged)
             {
-                StartCoroutine(ChargeOnPlayer());
+                _agent.ResetPath();
+                _playerAgent.ResetPath();
+                _justCharged = true;
+
+                Vector3 positionOffset = transform.position - player.transform.position;
+                positionOffset.z = 0;
+                _playerMovement.isBeingCharged = true;
+
+                Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.blue, Mathf.Infinity);
+                player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * 8f, ForceMode2D.Impulse);
+
+                StartCoroutine(Discharge());
+                
             }
         }
     }
 
-    private IEnumerator ChargeOnPlayer()
+    private IEnumerator Discharge()
     {
-        _justCharged = true;
         float remainingTime = chargeDuration;
-
-        Vector3 positionOffset = transform.position - player.transform.position;
-        // _agent.destination = new Vector3(-7f, 3.5f);
-        _agent.destination = positionOffset.normalized * -5;
-        _playerMovement.isBeingCharged = true;
-
-        Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.blue, Mathf.Infinity);
-        
-        
         while (remainingTime > 0f)
         {
-            player.transform.position = transform.position - positionOffset;
-            _playerAgent.destination = transform.position - positionOffset;
-            
             remainingTime -= Time.deltaTime;
             yield return null;            
         }
-
-        _justCharged = false;
+        
         _playerMovement.isBeingCharged = false;
+        _justCharged = false;
     }
+
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed;
-        }
-        if (other.gameObject.tag.Equals("Player"))
-        {
-            _justCharged = false;
         }
     }
 

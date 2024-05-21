@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NavMeshPlus.Components;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class NavMeshManager : MonoBehaviour
 {
