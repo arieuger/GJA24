@@ -3031,7 +3031,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 686342625}
-  chargeDuration: 0.75
+  chargeDuration: 0.2
+  chargeForce: 16
 --- !u!1 &1075455125
 GameObject:
   m_ObjectHideFlags: 0

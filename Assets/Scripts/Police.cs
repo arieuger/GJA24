@@ -10,6 +10,7 @@ public class Police : MonoBehaviour
 
     [SerializeField] private GameObject player;
     [SerializeField] private float chargeDuration;
+    [SerializeField] private float chargeForce = 16f;
     
     private NavMeshAgent _agent;
     private NavMeshAgent _playerAgent;
@@ -49,13 +50,26 @@ public class Police : MonoBehaviour
                 positionOffset.z = 0;
                 _playerMovement.isBeingCharged = true;
 
-                Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.blue, Mathf.Infinity);
-                player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * 8f, ForceMode2D.Impulse);
+                Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.red, Mathf.Infinity);
+                player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
 
                 StartCoroutine(Discharge());
+                StartCoroutine(StopPlayerChargeMovement());
                 
             }
         }
+    }
+
+    private IEnumerator StopPlayerChargeMovement()
+    {
+        float remainingTime = chargeDuration - 0.05f;
+        while (remainingTime > 0f)
+        {
+            remainingTime -= Time.deltaTime;
+            yield return null;            
+        }
+
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     private IEnumerator Discharge()
@@ -66,7 +80,7 @@ public class Police : MonoBehaviour
             remainingTime -= Time.deltaTime;
             yield return null;            
         }
-        
+
         _playerMovement.isBeingCharged = false;
         _justCharged = false;
     }
