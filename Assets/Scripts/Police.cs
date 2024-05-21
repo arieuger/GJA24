@@ -68,10 +68,10 @@ public class Police : MonoBehaviour
 
         Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.red, Mathf.Infinity);
         Debug.DrawRay(transform.position, positionOffset * 1.3f, Color.blue, Mathf.Infinity);
-        // TODO: Policía hacia atrás ata positionOffset * 1.3 para salir de player trigger ou:
-        // Temporizador para saber se has exited desde charged e se non chamar dende update
+        // TODO: Temporizador para saber se has exited desde charged e se non chamar dende update??
                 
         player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
+        GetComponent<Rigidbody2D>().AddForce(positionOffset * 2f, ForceMode2D.Impulse);
 
         StartCoroutine(Discharge());
     }
@@ -85,7 +85,9 @@ public class Police : MonoBehaviour
             yield return null;            
         }
 
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        
         _playerMovement.isBeingCharged = false;
         _justCharged = false;
     }
