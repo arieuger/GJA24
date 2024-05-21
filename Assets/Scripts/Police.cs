@@ -52,10 +52,12 @@ public class Police : MonoBehaviour
         float remainingTime = chargeDuration;
 
         Vector3 positionOffset = transform.position - player.transform.position;
-        _agent.destination = new Vector3(-7f, 3.5f);
+        // _agent.destination = new Vector3(-7f, 3.5f);
+        _agent.destination = positionOffset.normalized * -5;
         _playerMovement.isBeingCharged = true;
 
-        Debug.DrawRay(transform.position, positionOffset.normalized * -10, Color.blue, Mathf.Infinity);
+        Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.blue, Mathf.Infinity);
+        
         
         while (remainingTime > 0f)
         {
