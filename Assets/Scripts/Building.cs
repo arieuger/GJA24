@@ -33,7 +33,7 @@ public class Building : MonoBehaviour
         while (_remainingDestruction > 0)
         {
             _remainingDestruction -= Time.deltaTime / destructionTime;
-            Debug.Log(_remainingDestruction);
+            // Debug.Log(_remainingDestruction);
             slider.value = _remainingDestruction / destructionTime;
             yield return null;
         }

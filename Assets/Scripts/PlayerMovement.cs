@@ -7,11 +7,15 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
+    
+    [HideInInspector] public bool isBeingCharged;
+    [HideInInspector] public int continuousChargeCount;
+    [HideInInspector] public bool isChargeCounting;
+
     private NavMeshAgent _agent;
     private float _originalSpeed;
     private bool _isDestructing;
-    [HideInInspector] public bool isBeingCharged;
-    
+
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -29,9 +33,9 @@ public class PlayerMovement : MonoBehaviour
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
+        // Debug.Log(continuousChargeCount);
     }
-
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag.Equals("Roads"))
@@ -43,6 +47,21 @@ public class PlayerMovement : MonoBehaviour
             _isDestructing = true;
         }
         
+    }
+
+    public IEnumerator ReloadChargeCount()
+    {
+        isChargeCounting = true;
+        
+        float remainingTime = 3f;
+        while (remainingTime > 0f)
+        {
+            remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+
+        continuousChargeCount = 0;
+        isChargeCounting = false;
     }
 
     private void OnTriggerExit2D(Collider2D other)
