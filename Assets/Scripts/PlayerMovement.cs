@@ -50,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
-        Debug.Log(continuousChargeCount);
     }
 
     public void Block()
