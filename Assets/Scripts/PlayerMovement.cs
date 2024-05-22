@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
         _originalSpeed = _agent.speed;
         _originalColor = GetComponent<SpriteRenderer>().color;
+
+        StartCoroutine(RemoveBlockPoint());
     }
     
     private void Update()
@@ -48,19 +50,7 @@ public class PlayerMovement : MonoBehaviour
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
-    }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag.Equals("Roads"))
-        {
-            _agent.speed = _originalSpeed * 1.5f;
-        } else if (other.tag.Equals("DestructionZone"))
-        {
-            if (!_isDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
-            _isDestructing = true;
-        }
-        
+        Debug.Log(continuousChargeCount);
     }
 
     public void Block()
@@ -95,21 +85,31 @@ public class PlayerMovement : MonoBehaviour
         isInEscapeGrace = false;
     }
 
-    public IEnumerator ReloadChargeCount()
+    public IEnumerator RemoveBlockPoint()
     {
-        isChargeCounting = true;
-        
-        float remainingTime = timeToContinuousCharge;
-        while (remainingTime > 0f)
+        while (true)
         {
-            remainingTime -= Time.deltaTime;
-            yield return null;
+            if (continuousChargeCount is > 0 and <= 3)
+            {
+                continuousChargeCount--;
+            }
+            yield return new WaitForSeconds(timeToContinuousCharge / 3);
         }
-
-        continuousChargeCount = 0;
-        isChargeCounting = false;
     }
-
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag.Equals("Roads"))
+        {
+            _agent.speed = _originalSpeed * 1.5f;
+        } else if (other.tag.Equals("DestructionZone"))
+        {
+            if (!_isDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
+            _isDestructing = true;
+        }
+        
+    }
+    
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag.Equals("Roads"))

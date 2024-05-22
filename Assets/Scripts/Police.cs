@@ -74,11 +74,7 @@ public class Police : MonoBehaviour
         {
             _playerMovement.Block();
         }
-        if (!_playerMovement.isChargeCounting)
-        {
-            StartCoroutine(_playerMovement.ReloadChargeCount());
-        }
-        
+
         StartCoroutine(Discharge());
     }
 
