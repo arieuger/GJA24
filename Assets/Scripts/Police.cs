@@ -102,7 +102,7 @@ public class Police : MonoBehaviour
         while (true)
         {
 
-            if (Random.value > 0.8f)
+            if (Random.value > 0.8f && FindObjectsByType<Police>(FindObjectsSortMode.None).Length > 1)
             {
                 _agent.destination = Random.insideUnitCircle * 15f;
                 yield return new WaitForSeconds(3f);
