@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class Police : MonoBehaviour
 {
@@ -100,6 +101,13 @@ public class Police : MonoBehaviour
 
         while (true)
         {
+
+            if (Random.value > 0.8f)
+            {
+                _agent.destination = Random.insideUnitCircle * 15f;
+                yield return new WaitForSeconds(3f);
+            }
+            
             if (!_justCharged && !_playerMovement.isBlocked && !_playerMovement.isInEscapeGrace)
             {
                 _agent.destination = PlayerMovement.Instance.transform.position;

@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private float _originalSpeed;
     private bool _isDestructing;
     private Color _originalColor;
+    private bool isFlipped;
     
     public static PlayerMovement Instance { get; private set; }
     
@@ -51,6 +52,12 @@ public class PlayerMovement : MonoBehaviour
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
+
+        Vector3 vectorToTarget = _agent.destination - transform.position;
+        Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, 90) * vectorToTarget;
+        Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, rotatedVectorToTarget);
+        transform.rotation = targetRotation;
+
     }
 
     public void Block()
