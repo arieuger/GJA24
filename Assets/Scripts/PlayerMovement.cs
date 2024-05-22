@@ -7,14 +7,28 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [SerializeField] private float timeToContinuousCharge = 15f;
+    [SerializeField] private float blockTime = 2f;
     
     [HideInInspector] public bool isBeingCharged;
     [HideInInspector] public int continuousChargeCount;
     [HideInInspector] public bool isChargeCounting;
+    [HideInInspector] public bool isBlocked;
+    [HideInInspector] public bool isInEscapeGrace;
 
     private NavMeshAgent _agent;
     private float _originalSpeed;
     private bool _isDestructing;
+    private Color _originalColor;
+    
+    public static PlayerMovement Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+    }
 
     private void Start()
     {
@@ -23,17 +37,17 @@ public class PlayerMovement : MonoBehaviour
         _agent.updateUpAxis = false;
 
         _originalSpeed = _agent.speed;
+        _originalColor = GetComponent<SpriteRenderer>().color;
     }
     
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isBeingCharged)
+        if (Input.GetMouseButtonDown(0) && !isBeingCharged && !isBlocked)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;
             _agent.destination = mouseWorldPos;   
         }
-        // Debug.Log(continuousChargeCount);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -49,11 +63,43 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void Block()
+    {
+        StartCoroutine(BlockCo());
+    }
+
+    public IEnumerator BlockCo()
+    {
+        isBlocked = true;
+        continuousChargeCount = 0;
+        float remainingTime = blockTime;
+        while (remainingTime > 0f)
+        {
+            float lerp = Mathf.PingPong(Time.time, 0.25f);
+            GetComponent<SpriteRenderer>().color = Color.Lerp(_originalColor, Color.red, lerp);
+            
+            remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+        GetComponent<SpriteRenderer>().color = _originalColor;
+        isChargeCounting = false;
+        isBlocked = false;
+        isInEscapeGrace = true;
+        remainingTime = 1f;
+        while (remainingTime > 0f)
+        {
+            remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+
+        isInEscapeGrace = false;
+    }
+
     public IEnumerator ReloadChargeCount()
     {
         isChargeCounting = true;
         
-        float remainingTime = 3f;
+        float remainingTime = timeToContinuousCharge;
         while (remainingTime > 0f)
         {
             remainingTime -= Time.deltaTime;

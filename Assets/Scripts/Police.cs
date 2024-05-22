@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 public class Police : MonoBehaviour
 {
 
-    [SerializeField] private GameObject player;
+    // [SerializeField] private GameObject player;
     [SerializeField] private float chargeDuration;
     [SerializeField] private float chargeForce = 16f;
     
@@ -27,8 +27,8 @@ public class Police : MonoBehaviour
 
         _originalSpeed = _agent.speed;
 
-        _playerAgent = player.GetComponent<NavMeshAgent>();
-        _playerMovement = player.GetComponent<PlayerMovement>();
+        _playerAgent = PlayerMovement.Instance.GetComponent<NavMeshAgent>();
+        _playerMovement = PlayerMovement.Instance;
         
         StartCoroutine(StartChasingPlayer());
     }
@@ -62,17 +62,18 @@ public class Police : MonoBehaviour
         _playerAgent.ResetPath();
         _justCharged = true;
 
-        Vector3 positionOffset = transform.position - player.transform.position;
+        Vector3 positionOffset = transform.position - PlayerMovement.Instance.transform.position;
         positionOffset.z = 0;
         _playerMovement.isBeingCharged = true;
-
-        Debug.DrawRay(transform.position, positionOffset.normalized * -5, Color.red, Mathf.Infinity);
-        Debug.DrawRay(transform.position, positionOffset * 1.3f, Color.blue, Mathf.Infinity);
                 
-        player.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
+        PlayerMovement.Instance.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
         GetComponent<Rigidbody2D>().AddForce(positionOffset * 2.5f, ForceMode2D.Impulse);
 
-        _playerMovement.continuousChargeCount++;
+        if (!_playerMovement.isInEscapeGrace) _playerMovement.continuousChargeCount++;
+        if (_playerMovement.continuousChargeCount >= 3 && !_playerMovement.isBlocked && !_playerMovement.isInEscapeGrace)
+        {
+            _playerMovement.Block();
+        }
         if (!_playerMovement.isChargeCounting)
         {
             StartCoroutine(_playerMovement.ReloadChargeCount());
@@ -91,7 +92,7 @@ public class Police : MonoBehaviour
         }
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        PlayerMovement.Instance.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         
         _playerMovement.isBeingCharged = false;
         _justCharged = false;
@@ -103,9 +104,9 @@ public class Police : MonoBehaviour
 
         while (true)
         {
-            if (!_justCharged)
+            if (!_justCharged && !_playerMovement.isBlocked && !_playerMovement.isInEscapeGrace)
             {
-                _agent.destination = player.transform.position;
+                _agent.destination = PlayerMovement.Instance.transform.position;
                 yield return new WaitForSeconds(0.5f);
             }
             else yield return null;
