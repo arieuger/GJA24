@@ -1743,9 +1743,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faed5f47ed26830f6906297b44fd499b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToContinuousCharge: 15
+  blockTime: 2
   isBeingCharged: 0
   continuousChargeCount: 0
   isChargeCounting: 0
+  isBlocked: 0
+  isInEscapeGrace: 0
 --- !u!50 &686342630
 Rigidbody2D:
   serializedVersion: 4
@@ -3032,7 +3036,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1cf8dcf955bb4c3b49a31c18e81f92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 686342625}
   chargeDuration: 0.2
   chargeForce: 16
 --- !u!1 &1075455125
