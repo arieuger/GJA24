@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
@@ -61,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isBlocked = true;
         continuousChargeCount = 0;
+        FindObjectsByType<Building>(FindObjectsSortMode.None).ToList().ForEach(b => b.StopDestruction());
         float remainingTime = blockTime;
         while (remainingTime > 0f)
         {
