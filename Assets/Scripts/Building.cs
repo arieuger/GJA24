@@ -7,7 +7,7 @@ public class Building : MonoBehaviour
 {
 
     [SerializeField] private float destructionTime = 2f;    // TODO: Convertir a segundos
-    [SerializeField] private Slider slider;
+    [SerializeField] private Image fillImage;
 
     private float _remainingDestruction;
     private IEnumerator _destructionCo;
@@ -16,11 +16,6 @@ public class Building : MonoBehaviour
     {
         _remainingDestruction = destructionTime;
         _destructionCo = StartDestructionCo();
-    }
-    
-    void Update()
-    {
-        
     }
 
     public void StartDestruction()
@@ -35,7 +30,7 @@ public class Building : MonoBehaviour
             if (!PlayerMovement.Instance.isBlocked && !PlayerMovement.Instance.isBeingCharged)
             {
                 _remainingDestruction -= Time.deltaTime / destructionTime;
-                slider.value = _remainingDestruction / destructionTime;   
+                fillImage.fillAmount = _remainingDestruction / destructionTime;
             }
             yield return null;
         }
