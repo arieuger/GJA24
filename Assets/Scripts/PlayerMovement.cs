@@ -46,6 +46,9 @@ public class PlayerMovement : MonoBehaviour
     
     private void Update()
     {
+
+        if (!GameManager.Playing) return;
+        
         if (Input.GetMouseButtonDown(0) && !isBeingCharged && !isBlocked)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
