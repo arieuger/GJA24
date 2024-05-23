@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Image pauseBackgroundImage;
     [SerializeField] private GameObject menuPanel; 
@@ -15,37 +14,56 @@ public class GameManager : MonoBehaviour
     
     private float _timer = 244f;
     private const float PauseMenuSpeed = 2135f;
+    
+    public static GameManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance != null && Instance != this) Destroy(this);
+        else Instance = this;
+    }
+
 
     void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Playing = !Playing;
-            PauseGame();
+            ManagePauseButton();
         }
         
         if (Playing) {
             _timer -= Time.deltaTime;
             int minutes = Mathf.FloorToInt(_timer / 60F);
             int seconds = Mathf.FloorToInt(_timer % 60F);
-            string timeText = minutes.ToString ("00") + ":" + seconds.ToString ("00");
+            string timeText = minutes.ToString ("0") + ":" + seconds.ToString ("00");
             timerText.text = timeText;
+        }
+    }
+
+    private void ManagePauseButton()
+    {
+        Playing = !Playing;
+        if (!Playing)
+        {
+            PauseGame();
+        }
+        else
+        {
+            ContinueGame();
         }
     }
 
     private void PauseGame()
     {
-        if (!Playing)
-        {
-            StartCoroutine(HideGameCo());
-            StartCoroutine(BringMenuPanelCo());
-        }
-        else
-        {
-            StartCoroutine(ShowGameCo());
-            StartCoroutine(UpMenuPanelCo());
-        }
+        StartCoroutine(HideGameCo());
+        StartCoroutine(BringMenuPanelCo());
+    }
+
+    public void ContinueGame()
+    {
+        StartCoroutine(ShowGameCo());
+        StartCoroutine(UpMenuPanelCo());
     }
 
     private IEnumerator BringMenuPanelCo()
