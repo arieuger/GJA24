@@ -9,15 +9,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Image pauseBackgroundImage;
+    [SerializeField] private GameObject menuPanel; 
     
     [HideInInspector] public static bool Playing = true;
     
     private float _timer = 244f;
-    
-    void Start()
-    {
-        
-    }
+    private const float PauseMenuSpeed = 2135f;
 
     void Update()
     {
@@ -41,15 +38,49 @@ public class GameManager : MonoBehaviour
     {
         if (!Playing)
         {
-            Time.timeScale = 0; // TODO: A corrutina
             StartCoroutine(HideGameCo());
+            StartCoroutine(BringMenuPanelCo());
         }
         else
         {
             StartCoroutine(ShowGameCo());
+            StartCoroutine(UpMenuPanelCo());
         }
     }
 
+    private IEnumerator BringMenuPanelCo()
+    {
+        Time.timeScale = 0; 
+        menuPanel.SetActive(true);
+        float actualYPos = menuPanel.transform.localPosition.y; 
+        while (menuPanel.transform.localPosition.y > 90f)
+        {
+            actualYPos -= PauseMenuSpeed * Time.unscaledDeltaTime;
+            menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+            yield return null;
+        }
+
+        actualYPos = 90f;
+        menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+    }
+
+    private IEnumerator UpMenuPanelCo()
+    {
+        
+        float actualYPos = menuPanel.transform.localPosition.y; 
+        while (menuPanel.transform.localPosition.y < 1075f)
+        {
+            actualYPos += PauseMenuSpeed * Time.unscaledDeltaTime;
+            menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+            yield return null;
+        }
+        
+        actualYPos = 1075f;
+        menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+        menuPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    
     private IEnumerator HideGameCo()
     {
         pauseBackgroundImage.gameObject.SetActive(true);
@@ -79,7 +110,6 @@ public class GameManager : MonoBehaviour
         pauseBackgroundImage.color = new Color(pauseBackgroundImage.color.r, pauseBackgroundImage.color.g,
             pauseBackgroundImage.color.b, actualAlpha);
         pauseBackgroundImage.gameObject.SetActive(false);
-        
-        Time.timeScale = 1f;
+
     }
 }

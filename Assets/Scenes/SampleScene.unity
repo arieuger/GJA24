@@ -169,6 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 1360472982}
   pauseBackgroundImage: {fileID: 559306589}
+  menuPanel: {fileID: 2860613298668632927}
 --- !u!1001 &253866240
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3020,7 +3021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3532719311378788930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3468,7 +3469,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1075}
-  m_SizeDelta: {x: 562.25, y: 1036.4429}
+  m_SizeDelta: {x: 562.25, y: 1036.443}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8106187311240146094
 MonoBehaviour:
