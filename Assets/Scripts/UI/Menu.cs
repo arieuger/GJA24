@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
 
     [SerializeField] private GameObject menuPanel; 
     [SerializeField] private GameObject levelChanger;
+    [SerializeField] private AudioSource loopMenu;
     
     private const float MenuSpeed = 2135f;
 
@@ -36,6 +37,7 @@ public class Menu : MonoBehaviour
 
         actualYPos = 90f;
         menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+        loopMenu.Play();
     
     }
 
@@ -52,6 +54,10 @@ public class Menu : MonoBehaviour
         float remainingTime = 1.5f;
         while (remainingTime > 0f)
         {
+            if (loopMenu.volume >= 0)
+            {
+                loopMenu.volume -= Time.deltaTime;
+            }
             remainingTime -= Time.deltaTime;
             yield return null;            
         }
