@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector] public static bool Playing = true;
     
-    private float _timer = 244f;
+    private float _timer = 244f; //10f; 
     private const float PauseMenuSpeed = 2135f;
     
     public static GameManager Instance { get; private set; }
@@ -26,6 +27,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+        if (_timer <= 0.1f)
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(0);
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
