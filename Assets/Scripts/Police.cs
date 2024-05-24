@@ -19,8 +19,9 @@ public class Police : MonoBehaviour
     private float _originalSpeed;
     private bool _justCharged;
     private bool _chargedAndExited;
+    private bool _isFlipped;
     
-    void Start()
+    private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
@@ -32,6 +33,32 @@ public class Police : MonoBehaviour
         _playerMovement = PlayerMovement.Instance;
         
         StartCoroutine(StartChasingPlayer());
+    }
+
+    private void Update()
+    {
+        
+        if (_agent.remainingDistance >= 0.1f)
+        {
+            Vector3 vectorToTarget = _agent.destination - transform.position;
+            Vector3 rotatedVectorToTarget = Quaternion.Euler(0, 0, 90) * vectorToTarget;
+            Quaternion targetRotation = Quaternion.LookRotation(Vector3.forward, rotatedVectorToTarget);
+            transform.rotation = targetRotation;
+
+            if (_agent.destination.x < transform.position.x && !_isFlipped)
+            {
+                _isFlipped = true;
+                var localScale = transform.localScale;
+                localScale.y = Math.Abs(localScale.y) * -1;
+                transform.localScale = localScale;
+            } else if (_agent.destination.x > transform.position.x && _isFlipped)
+            {
+                _isFlipped = false;
+                var localScale = transform.localScale;
+                localScale.y = Math.Abs(localScale.y);
+                transform.localScale = localScale;
+            }    
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
