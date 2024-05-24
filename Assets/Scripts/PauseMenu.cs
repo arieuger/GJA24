@@ -14,16 +14,12 @@ public class PauseMenu : MonoBehaviour
 
     public void OnRestartButton()
     {
-        GameManager.Playing = true;
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(GameManager.Instance.UpMenuPauseAndRestartOrMenu(true));
     }
 
     public void OnStartButton()
     {
-        GameManager.Playing = true;
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        StartCoroutine(GameManager.Instance.UpMenuPauseAndRestartOrMenu(false));
     }
     
 }

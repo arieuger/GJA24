@@ -72,6 +72,25 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ShowGameCo());
         StartCoroutine(UpMenuPanelCo());
     }
+    
+    public IEnumerator UpMenuPauseAndRestartOrMenu(bool isRestart)
+    {
+        float actualYPos = menuPanel.transform.localPosition.y; 
+        while (menuPanel.transform.localPosition.y < 1075f)
+        {
+            actualYPos += PauseMenuSpeed * Time.unscaledDeltaTime;
+            menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+            yield return null;
+        }
+        
+        actualYPos = 1075f;
+        menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+        
+        Playing = true;
+        Time.timeScale = 1f;
+        if (isRestart) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else SceneManager.LoadScene(0);
+    }
 
     private IEnumerator BringMenuPanelCo()
     {
