@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
 
     private NavMeshAgent _agent;
     private float _originalSpeed;
-    private bool _isDestructing;
     private Color _originalColor;
     private bool _isFlipped;
     
@@ -131,12 +130,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed * 1.5f;
-        } else if (other.tag.Equals("DestructionZone"))
-        {
-            if (!_isDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
-            _isDestructing = true;
-        }
-        
+        } 
     }
     
     private void OnTriggerExit2D(Collider2D other)
@@ -144,10 +138,6 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed;
-        } else if (other.tag.Equals("DestructionZone"))
-        {
-            if (_isDestructing) other.gameObject.GetComponentInParent<Building>().StopDestruction();
-            _isDestructing = false;
-        }
+        } 
     }
 }
