@@ -21,8 +21,17 @@ public class PlayerShovel : MonoBehaviour
     {
         if (other.tag.Equals("DestructionZone"))
         {
-            if (_isDestructing) other.gameObject.GetComponentInParent<Building>().StopDestruction();
-            _isDestructing = false;
+            if (_isDestructing)
+            {
+                var building = other.gameObject.GetComponentInParent<Building>();
+                if (building != null)
+                {
+                    building.StopDestruction();    
+                }
+                
+                _isDestructing = false;
+            }
+            
         }
     }
 }
