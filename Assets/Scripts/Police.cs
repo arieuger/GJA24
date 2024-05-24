@@ -9,7 +9,6 @@ using Random = UnityEngine.Random;
 public class Police : MonoBehaviour
 {
 
-    // [SerializeField] private GameObject player;
     [SerializeField] private float chargeDuration;
     [SerializeField] private float chargeForce = 16f;
     
@@ -97,7 +96,7 @@ public class Police : MonoBehaviour
         PlayerMovement.Instance.GetComponent<Rigidbody2D>().AddForce(-positionOffset.normalized * chargeForce, ForceMode2D.Impulse);
         GetComponent<Rigidbody2D>().AddForce(positionOffset * 2.5f, ForceMode2D.Impulse);
 
-        if (!_playerMovement.isInEscapeGrace) _playerMovement.continuousChargeCount++;
+        if (!_playerMovement.isInEscapeGrace) _playerMovement.AddChargeCount();
         if (_playerMovement.continuousChargeCount >= 3 && !_playerMovement.isBlocked && !_playerMovement.isInEscapeGrace)
         {
             _playerMovement.Block();

@@ -5,16 +5,19 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     [SerializeField] private float timeToContinuousCharge = 15f;
     [SerializeField] private float blockTime = 2f;
+    [SerializeField] private List<Image> lightImages;
+    [SerializeField] private Sprite redLight;
+    [SerializeField] private Sprite yellowLight;
     
     [HideInInspector] public bool isBeingCharged;
     [HideInInspector] public int continuousChargeCount;
-    [HideInInspector] public bool isChargeCounting;
     [HideInInspector] public bool isBlocked;
     [HideInInspector] public bool isInEscapeGrace;
 
@@ -40,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
         _originalSpeed = _agent.speed;
         _originalColor = GetComponent<SpriteRenderer>().color;
 
-        StartCoroutine(RemoveBlockPoint());
+       // StartCoroutine(RemoveBlockPoint());
     }
     
     private void Update()
@@ -85,6 +88,12 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(BlockCo());
     }
 
+    public void AddChargeCount()
+    {
+        continuousChargeCount++;
+        lightImages[continuousChargeCount - 1].sprite = redLight;
+    }
+
     public IEnumerator BlockCo()
     {
         isBlocked = true;
@@ -100,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         GetComponent<SpriteRenderer>().color = _originalColor;
-        isChargeCounting = false;
+        StartCoroutine(TurnOffLights());
         isBlocked = false;
         isInEscapeGrace = true;
         remainingTime = 1f;
@@ -139,5 +148,14 @@ public class PlayerMovement : MonoBehaviour
         {
             _agent.speed = _originalSpeed;
         } 
+    }
+
+    private IEnumerator TurnOffLights()
+    {
+        for (int i = lightImages.Count - 1; i >= 0; i--)
+        {
+            lightImages[i].sprite = yellowLight;
+            yield return new WaitForSeconds(0.15f);       
+        }
     }
 }
