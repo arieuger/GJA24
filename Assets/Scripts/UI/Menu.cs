@@ -46,10 +46,10 @@ public class Menu : MonoBehaviour
         levelChanger.SetActive(true);
         levelChanger.GetComponent<Animator>().Play("FadeOut");
 
-        StartCoroutine(waitTilNextScene());
+        StartCoroutine(_waitTilNextScene());
     }
 
-    private IEnumerator waitTilNextScene()
+    private IEnumerator _waitTilNextScene()
     {
         float remainingTime = 1.5f;
         while (remainingTime > 0f)

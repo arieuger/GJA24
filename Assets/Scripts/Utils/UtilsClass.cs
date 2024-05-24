@@ -1,7 +1,27 @@
+using System.Collections;
 using UnityEngine;
 
 public class UtilsClass
 {
+
+    public static IEnumerator StartMusic(AudioSource audioSrc, bool onPause = false)
+    {
+        audioSrc.Play();
+        while (audioSrc.volume <= 1f)
+        {
+            audioSrc.volume += onPause ? Time.unscaledDeltaTime : Time.deltaTime;
+            yield return null;
+        }
+
+        audioSrc.volume = 1f;
+    }
+    
+    public static void StopMusic(AudioSource audioSrc)
+    {
+        audioSrc.volume = 0;
+        audioSrc.Stop();
+    }
+    
     public static TextMesh CreateWorldText(string text, Transform parent = null, Vector3 localPosition = default(Vector3), int fontSize = 40, Color? color = null, TextAnchor textAnchor = TextAnchor.UpperLeft, TextAlignment textAlignment = TextAlignment.Left, int sortingOrder = 10) {
         if (color == null) color = Color.white;
         return CreateWorldText(parent, text, localPosition, fontSize, (Color)color, textAnchor, textAlignment, sortingOrder);

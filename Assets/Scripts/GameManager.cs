@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,9 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Image pauseBackgroundImage;
-    [SerializeField] private GameObject menuPanel; 
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private AudioSource mainMusic;
+    [SerializeField] private AudioSource pauseMenuMusic;
     
     [HideInInspector] public static bool Playing = true;
     
@@ -24,6 +27,11 @@ public class GameManager : MonoBehaviour
         else Instance = this;
     }
 
+    private void Start()
+    {
+        pauseMenuMusic.ignoreListenerPause = true;
+        StartCoroutine(UtilsClass.StartMusic(mainMusic));
+    }
 
     void Update()
     {
@@ -75,6 +83,9 @@ public class GameManager : MonoBehaviour
     
     public IEnumerator UpMenuPauseAndRestartOrMenu(bool isRestart)
     {
+        
+        UtilsClass.StopMusic(pauseMenuMusic);
+        
         float actualYPos = menuPanel.transform.localPosition.y; 
         while (menuPanel.transform.localPosition.y < 1075f)
         {
@@ -88,28 +99,16 @@ public class GameManager : MonoBehaviour
         
         Playing = true;
         Time.timeScale = 1f;
+        AudioListener.pause = false;
+        
         if (isRestart) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         else SceneManager.LoadScene(0);
     }
-
-    private IEnumerator BringMenuPanelCo()
-    {
-        Time.timeScale = 0; 
-        menuPanel.SetActive(true);
-        float actualYPos = menuPanel.transform.localPosition.y; 
-        while (menuPanel.transform.localPosition.y > 90f)
-        {
-            actualYPos -= PauseMenuSpeed * Time.unscaledDeltaTime;
-            menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
-            yield return null;
-        }
-
-        actualYPos = 90f;
-        menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
-    }
-
+    
     private IEnumerator UpMenuPanelCo()
     {
+
+        UtilsClass.StopMusic(pauseMenuMusic);
         
         float actualYPos = menuPanel.transform.localPosition.y; 
         while (menuPanel.transform.localPosition.y < 1075f)
@@ -123,8 +122,29 @@ public class GameManager : MonoBehaviour
         menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
         menuPanel.SetActive(false);
         Time.timeScale = 1f;
+        AudioListener.pause = false;
     }
-    
+
+    private IEnumerator BringMenuPanelCo()
+    {
+        Time.timeScale = 0; 
+        AudioListener.pause = true;
+        menuPanel.SetActive(true);
+
+        StartCoroutine(UtilsClass.StartMusic(pauseMenuMusic, true));
+        
+        float actualYPos = menuPanel.transform.localPosition.y; 
+        while (menuPanel.transform.localPosition.y > 90f)
+        {
+            actualYPos -= PauseMenuSpeed * Time.unscaledDeltaTime;
+            menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+            yield return null;
+        }
+
+        actualYPos = 90f;
+        menuPanel.transform.localPosition = new Vector3(menuPanel.transform.localPosition.x, actualYPos);
+    }
+
     private IEnumerator HideGameCo()
     {
         pauseBackgroundImage.gameObject.SetActive(true);
