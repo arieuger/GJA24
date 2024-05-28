@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour
     private float _originalSpeed;
     private Color _originalColor;
     private bool _isFlipped;
+
+    // SOUNDS
+    [SerializeField] private AudioSource clickSound;
+    [SerializeField] private AudioSource blockedSound;
     
     public static PlayerMovement Instance { get; private set; }
     
@@ -51,11 +55,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (!GameManager.Playing) return;
         
-        if (Input.GetMouseButtonDown(0) && !isBeingCharged && !isBlocked)
+        if (Input.GetMouseButtonDown(0))
         {
-            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mouseWorldPos.z = 0;
-            _agent.destination = mouseWorldPos;   
+            clickSound.Play();
+
+            if (!isBeingCharged && !isBlocked)
+            {
+                Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mouseWorldPos.z = 0;
+                _agent.destination = mouseWorldPos;   
+            }
         }
 
         if (_agent.remainingDistance >= 0.1f)
@@ -97,6 +106,9 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator BlockCo()
     {
         isBlocked = true;
+
+        blockedSound.Play();
+        
         continuousChargeCount = 0;
         FindObjectsByType<Building>(FindObjectsSortMode.None).ToList().ForEach(b => b.StopDestruction());
         float remainingTime = blockTime;

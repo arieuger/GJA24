@@ -19,6 +19,9 @@ public class Police : MonoBehaviour
     private bool _justCharged;
     private bool _chargedAndExited;
     private bool _isFlipped;
+
+    // SOUNDS
+    [SerializeField] private AudioSource chargeSound;
     
     private void Start()
     {
@@ -88,6 +91,8 @@ public class Police : MonoBehaviour
         _agent.ResetPath();
         _playerAgent.ResetPath();
         _justCharged = true;
+
+        chargeSound.Play();
 
         Vector3 positionOffset = transform.position - PlayerMovement.Instance.transform.position;
         positionOffset.z = 0;

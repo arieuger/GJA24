@@ -16,6 +16,9 @@ public class Building : MonoBehaviour
     private float _remainingDestruction;
     private IEnumerator _destructionCo;
     
+    // SOUNDS
+    [SerializeField] private AudioSource fallingBuildingSound;
+    [SerializeField] private AudioSource destroyedBuildingSound;
     
     void Start()
     {
@@ -25,6 +28,7 @@ public class Building : MonoBehaviour
 
     public void StartDestruction()
     {
+        fallingBuildingSound.Play();
         StartCoroutine(_destructionCo);
     }
 
@@ -49,6 +53,7 @@ public class Building : MonoBehaviour
 
         if (_remainingDestruction <= 0.01f)
         {
+            destroyedBuildingSound.Play();
             Destroy(gameObject);
             NavMeshManager.Instance.UpdateNavMesh();
         }
@@ -57,6 +62,7 @@ public class Building : MonoBehaviour
     public void StopDestruction()
     {
         StopCoroutine(_destructionCo);
+        fallingBuildingSound.Pause();
         destructionZoneSquare.color = notBeingDestructedColor;
     }
     
