@@ -593,6 +593,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -848,6 +852,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1070,6 +1078,10 @@ PrefabInstance:
     - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Name
       value: Building (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Enabled
@@ -1781,7 +1793,7 @@ Transform:
   m_GameObject: {fileID: 686342625}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: 2.36, z: 0}
+  m_LocalPosition: {x: -1, y: -0.13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1822,7 +1834,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faed5f47ed26830f6906297b44fd499b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToContinuousCharge: 15
   blockTime: 2
   lightImages:
   - {fileID: 1708298003}
@@ -1836,6 +1847,7 @@ MonoBehaviour:
   continuousChargeCount: 0
   isBlocked: 0
   isInEscapeGrace: 0
+  isEndingGame: 0
 --- !u!50 &686342630
 Rigidbody2D:
   serializedVersion: 4
@@ -2082,6 +2094,10 @@ PrefabInstance:
     - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Name
       value: Building (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Sprite
@@ -2499,6 +2515,10 @@ PrefabInstance:
     - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Name
       value: Building (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Enabled
@@ -3180,6 +3200,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -3682,6 +3706,10 @@ PrefabInstance:
     - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Name
       value: Building (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710821791580970519, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4754301201061331726, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: m_Enabled

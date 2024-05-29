@@ -20,6 +20,7 @@ public class Police : MonoBehaviour
     private bool _justCharged;
     private bool _chargedAndExited;
     private bool _isFlipped;
+    private bool _isEndingGame;
 
     // SOUNDS
     [SerializeField] private AudioSource sirenSound;
@@ -73,16 +74,28 @@ public class Police : MonoBehaviour
             }    
         }
     }
+    
+    public IEnumerator PoliceEndGame()
+    {
+        _isEndingGame = true;
+        _agent.ResetPath();
+        
+        while (_agent.speed > 0f)
+        {
+            _agent.speed -= 0.5f * Time.deltaTime; 
+            yield return null;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.Equals("Roads"))
+        if (!_isEndingGame && other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed * 1.5f;
         } 
         if (other.gameObject.tag.Equals("Player"))
         {
-            if (!_justCharged)
+            if (!_isEndingGame && !_justCharged)
             {
                 ChargeAgainstPlayer();
             }
@@ -91,7 +104,7 @@ public class Police : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag.Equals("Roads"))
+        if (!_isEndingGame && other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed;
         }
@@ -150,7 +163,7 @@ public class Police : MonoBehaviour
                 yield return new WaitForSeconds(3f);
             }
             
-            if (!_justCharged && !_playerMovement.isBlocked && !_playerMovement.isInEscapeGrace)
+            if (!_isEndingGame && !_justCharged && !_playerMovement.isBlocked && !_playerMovement.isInEscapeGrace)
             {
                 _agent.destination = PlayerMovement.Instance.transform.position;
                 yield return new WaitForSeconds(0.5f);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,8 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioSource pauseMenuSound;
     
     [HideInInspector] public static bool Playing = true;
-    
-    private float _timer = 244f; //10f; 
+
+    private float _timer = 244f; 
     private const float PauseMenuSpeed = 2135f;
     
     public static GameManager Instance { get; private set; }
@@ -59,7 +60,30 @@ public class GameManager : MonoBehaviour
             int seconds = Mathf.FloorToInt(_timer % 60F);
             string timeText = minutes.ToString ("0") + ":" + seconds.ToString ("00");
             timerText.text = timeText;
+
+            if (_timer <= 5)
+            {
+                EndGame();
+            }
         }
+    }
+
+    public void EndGame(bool win = false)
+    {
+        StartCoroutine(PlayerMovement.Instance.PlayerEndGame());
+        FindObjectsByType<Police>(FindObjectsSortMode.None).ToList().ForEach(p => StartCoroutine(p.PoliceEndGame()));
+        StartCoroutine(LoadCredits());
+    }
+
+    private IEnumerator LoadCredits(bool win = false)
+    {
+        float remainingTime = 3.5f;
+        while (remainingTime > 0f)
+        {
+            remainingTime -= Time.deltaTime;
+            yield return null;
+        }
+        SceneManager.LoadScene(0);
     }
 
     private void ManagePauseButton()

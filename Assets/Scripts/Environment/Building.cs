@@ -56,6 +56,10 @@ public class Building : MonoBehaviour
             destroyedBuildingSound.Play();
             Destroy(gameObject);
             NavMeshManager.Instance.UpdateNavMesh();
+            if (FindObjectsByType<Building>(FindObjectsSortMode.None).Length == 1)
+            {
+                GameManager.Instance.EndGame(true);
+            }
         }
     }
     

@@ -10,7 +10,6 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
 
-    [SerializeField] private float timeToContinuousCharge = 15f;
     [SerializeField] private float blockTime = 2f;
     [SerializeField] private List<Image> lightImages;
     [SerializeField] private Sprite redLight;
@@ -23,7 +22,8 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public int continuousChargeCount;
     [HideInInspector] public bool isBlocked;
     [HideInInspector] public bool isInEscapeGrace;
-
+    [HideInInspector] public bool isEndingGame;
+    
     private NavMeshAgent _agent;
     private Animator _animator;
     private float _originalSpeed;
@@ -53,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
         _originalSpeed = _agent.speed;
         _originalColor = GetComponent<SpriteRenderer>().color;
 
-       // StartCoroutine(RemoveBlockPoint());
     }
     
     private void Update()
@@ -62,9 +61,9 @@ public class PlayerMovement : MonoBehaviour
         if (!GameManager.Playing) return;
         
         _animator.SetFloat(Movement, _agent.velocity.magnitude);
-        _animator.SetBool(IsAttacking, GetComponentInChildren<PlayerShovel>().IsDestructing && !isBlocked);
+        _animator.SetBool(IsAttacking, !isEndingGame && GetComponentInChildren<PlayerShovel>().IsDestructing && !isBlocked);
         
-        if (Input.GetMouseButtonDown(0))
+        if (!isEndingGame && Input.GetMouseButtonDown(0))
         {
             clickSound.Play();
 
@@ -99,6 +98,18 @@ public class PlayerMovement : MonoBehaviour
         }
         
 
+    }
+
+    public IEnumerator PlayerEndGame()
+    {
+        isEndingGame = true;
+        while (_agent.speed > 0f)
+        {
+            _agent.speed -= 0.1f * Time.deltaTime; 
+            yield return null;
+        }
+        
+        _agent.ResetPath();
     }
 
     public void Block()
@@ -142,22 +153,10 @@ public class PlayerMovement : MonoBehaviour
 
         isInEscapeGrace = false;
     }
-
-    public IEnumerator RemoveBlockPoint()
-    {
-        while (true)
-        {
-            if (continuousChargeCount is > 0 and <= 3)
-            {
-                continuousChargeCount--;
-            }
-            yield return new WaitForSeconds(timeToContinuousCharge / 3);
-        }
-    }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag.Equals("Roads"))
+        if (!isEndingGame && other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed * 1.5f;
         } 
@@ -165,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
     
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag.Equals("Roads"))
+        if (!isEndingGame && other.tag.Equals("Roads"))
         {
             _agent.speed = _originalSpeed;
         } 
