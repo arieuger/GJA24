@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             remainingTime -= Time.deltaTime;
             yield return null;
         }
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(3);
     }
 
     private void ManagePauseButton()
