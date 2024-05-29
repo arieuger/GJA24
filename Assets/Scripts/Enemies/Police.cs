@@ -21,6 +21,7 @@ public class Police : MonoBehaviour
     private bool _isFlipped;
 
     // SOUNDS
+    [SerializeField] private AudioSource sirenSound;
     [SerializeField] private AudioSource chargeSound;
     
     private void Start()
@@ -33,6 +34,8 @@ public class Police : MonoBehaviour
 
         _playerAgent = PlayerMovement.Instance.GetComponent<NavMeshAgent>();
         _playerMovement = PlayerMovement.Instance;
+
+        sirenSound.Play();
         
         StartCoroutine(StartChasingPlayer());
     }
