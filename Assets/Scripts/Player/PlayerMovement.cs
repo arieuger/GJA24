@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private List<Image> lightImages;
     [SerializeField] private Sprite redLight;
     [SerializeField] private Sprite yellowLight;
+    // SOUNDS
+    [SerializeField] private AudioSource clickSound;
+    [SerializeField] private AudioSource blockedSound;
     
     [HideInInspector] public bool isBeingCharged;
     [HideInInspector] public int continuousChargeCount;
@@ -22,14 +25,15 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool isInEscapeGrace;
 
     private NavMeshAgent _agent;
+    private Animator _animator;
     private float _originalSpeed;
     private Color _originalColor;
     private bool _isFlipped;
-
-    // SOUNDS
-    [SerializeField] private AudioSource clickSound;
-    [SerializeField] private AudioSource blockedSound;
     
+    // Anim parameters
+    private static readonly int Movement = Animator.StringToHash("movement");
+    private static readonly int IsAttacking = Animator.StringToHash("isAttacking");
+
     public static PlayerMovement Instance { get; private set; }
     
     private void Awake()
@@ -44,6 +48,8 @@ public class PlayerMovement : MonoBehaviour
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
 
+        _animator = GetComponent<Animator>();
+
         _originalSpeed = _agent.speed;
         _originalColor = GetComponent<SpriteRenderer>().color;
 
@@ -54,6 +60,9 @@ public class PlayerMovement : MonoBehaviour
     {
 
         if (!GameManager.Playing) return;
+        
+        _animator.SetFloat(Movement, _agent.velocity.magnitude);
+        _animator.SetBool(IsAttacking, GetComponentInChildren<PlayerShovel>().IsDestructing && !isBlocked);
         
         if (Input.GetMouseButtonDown(0))
         {

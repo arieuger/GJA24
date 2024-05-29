@@ -5,14 +5,14 @@ using UnityEngine;
 public class PlayerShovel : MonoBehaviour
 {
     
-    private bool _isDestructing;
+    public bool IsDestructing { get; private set; }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag.Equals("DestructionZone"))
         {
-            if (!_isDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
-            _isDestructing = true;
+            if (!IsDestructing) other.gameObject.GetComponentInParent<Building>().StartDestruction();
+            IsDestructing = true;
         }
         
     }
@@ -21,7 +21,7 @@ public class PlayerShovel : MonoBehaviour
     {
         if (other.tag.Equals("DestructionZone"))
         {
-            if (_isDestructing)
+            if (IsDestructing)
             {
                 var building = other.gameObject.GetComponentInParent<Building>();
                 if (building != null)
@@ -29,7 +29,7 @@ public class PlayerShovel : MonoBehaviour
                     building.StopDestruction();    
                 }
                 
-                _isDestructing = false;
+                IsDestructing = false;
             }
             
         }
