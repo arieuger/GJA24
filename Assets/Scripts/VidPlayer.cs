@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,11 +15,16 @@ public class VidPlayer : MonoBehaviour
         StartCoroutine(PlayVideo());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene(2);
+    }
+
     private IEnumerator PlayVideo()
     {
         if (isEnding)
         {
-            float remainingTime = 23f;
+            float remainingTime = 21f;
             while (remainingTime > 0f)
             {
                 remainingTime -= Time.deltaTime;
