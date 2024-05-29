@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndingWin.unity
     guid: b95e15fb83b8bc1b9a5466d4095fdb7f
+  - enabled: 1
+    path: Assets/Scenes/EndingLoose.unity
+    guid: 85ca0a5c63424656e98e1fdbadb4eadc
   m_configObjects: {}

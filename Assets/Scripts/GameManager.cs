@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     
     [HideInInspector] public static bool Playing = true;
 
-    private float _timer = 244f; 
+    private float _timer = 241f; 
     private const float PauseMenuSpeed = 2135f;
     
     public static GameManager Instance { get; private set; }
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(PlayerMovement.Instance.PlayerEndGame());
         FindObjectsByType<Police>(FindObjectsSortMode.None).ToList().ForEach(p => StartCoroutine(p.PoliceEndGame()));
-        StartCoroutine(LoadCredits());
+        StartCoroutine(LoadCredits(win));
     }
 
     private IEnumerator LoadCredits(bool win = false)
@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
             remainingTime -= Time.deltaTime;
             yield return null;
         }
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(win ? 3 : 4);
     }
 
     private void ManagePauseButton()
