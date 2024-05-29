@@ -11,8 +11,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Image pauseBackgroundImage;
     [SerializeField] private GameObject menuPanel;
+
+    // MUSIC
     [SerializeField] private AudioSource mainMusic;
     [SerializeField] private AudioSource pauseMenuMusic;
+
+    // SOUNDS
+    [SerializeField] private AudioSource pauseMenuSound;
     
     [HideInInspector] public static bool Playing = true;
     
@@ -30,6 +35,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         pauseMenuMusic.ignoreListenerPause = true;
+        pauseMenuSound.ignoreListenerPause = true;
         StartCoroutine(UtilsClass.StartMusic(mainMusic));
     }
 
@@ -77,13 +83,14 @@ public class GameManager : MonoBehaviour
 
     public void ContinueGame()
     {
+        pauseMenuSound.Play();
         StartCoroutine(ShowGameCo());
         StartCoroutine(UpMenuPanelCo());
     }
     
     public IEnumerator UpMenuPauseAndRestartOrMenu(bool isRestart)
     {
-        
+        pauseMenuSound.Play();
         UtilsClass.StopMusic(pauseMenuMusic);
         
         float actualYPos = menuPanel.transform.localPosition.y; 
@@ -132,6 +139,7 @@ public class GameManager : MonoBehaviour
         menuPanel.SetActive(true);
 
         StartCoroutine(UtilsClass.StartMusic(pauseMenuMusic, true));
+        pauseMenuSound.Play();
         
         float actualYPos = menuPanel.transform.localPosition.y; 
         while (menuPanel.transform.localPosition.y > 90f)

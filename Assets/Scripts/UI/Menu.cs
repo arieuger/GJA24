@@ -9,6 +9,9 @@ public class Menu : MonoBehaviour
     [SerializeField] private GameObject menuPanel; 
     [SerializeField] private GameObject levelChanger;
     [SerializeField] private AudioSource loopMenu;
+
+    // SOUNDS
+    [SerializeField] private AudioSource menuSound;
     
     private const float MenuSpeed = 2135f;
 
@@ -19,13 +22,14 @@ public class Menu : MonoBehaviour
 
     private IEnumerator BringStartMenu()
     {
-        
         float remainingTime = 0.75f;
         while (remainingTime > 0f)
         {
             remainingTime -= Time.deltaTime;
             yield return null;            
         }
+        
+        menuSound.Play();
         
         float actualYPos = menuPanel.transform.localPosition.y; 
         while (menuPanel.transform.localPosition.y > 90f)
