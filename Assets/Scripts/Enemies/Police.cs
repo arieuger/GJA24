@@ -15,6 +15,7 @@ public class Police : MonoBehaviour
     private NavMeshAgent _agent;
     private NavMeshAgent _playerAgent;
     private PlayerMovement _playerMovement;
+    private Animator _animator;
     private float _originalSpeed;
     private bool _justCharged;
     private bool _chargedAndExited;
@@ -24,11 +25,16 @@ public class Police : MonoBehaviour
     [SerializeField] private AudioSource sirenSound;
     [SerializeField] private AudioSource chargeSound;
     
+    // Anim parameters
+    private static readonly int Movement = Animator.StringToHash("movement");
+    
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
+
+        _animator = GetComponent<Animator>();
 
         _originalSpeed = _agent.speed;
 
@@ -42,6 +48,8 @@ public class Police : MonoBehaviour
 
     private void Update()
     {
+        
+        _animator.SetFloat(Movement, _agent.velocity.magnitude);
         
         if (_agent.remainingDistance >= 0.1f)
         {
