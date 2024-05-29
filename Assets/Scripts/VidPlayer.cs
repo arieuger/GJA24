@@ -6,22 +6,47 @@ using UnityEngine.Video;
 public class VidPlayer : MonoBehaviour
 {
     [SerializeField] private string videoFileName;
+    [SerializeField] private bool isEnding;
+
+    private VideoPlayer _videoPlayer;
     void Start()
     {
-        PlayVideo();
+        StartCoroutine(PlayVideo());
     }
 
-    public void PlayVideo()
+    private IEnumerator PlayVideo()
     {
-        VideoPlayer videoPlayer = GetComponent<VideoPlayer>();
-        if (videoPlayer)
+        if (isEnding)
+        {
+            float remainingTime = 23f;
+            while (remainingTime > 0f)
+            {
+                remainingTime -= Time.deltaTime;
+                yield return null;            
+            }
+        }
+        
+        _videoPlayer = GetComponent<VideoPlayer>();
+        if (_videoPlayer)
         {
             string videoPath = System.IO.Path.Combine(Application.streamingAssetsPath, videoFileName);
             Debug.Log(videoPath);
-            videoPlayer.url = videoPath;
-            videoPlayer.Play();
-            StartCoroutine(WaitToNextScene());
+            _videoPlayer.url = videoPath;
+            _videoPlayer.Play();
         }
+        
+        if (isEnding) StartCoroutine(WaitToNextScene());
+    }
+
+    private IEnumerator WaitToNextVideo()
+    {
+        float remainingTime = 20f;
+        while (remainingTime > 0f)
+        {
+            remainingTime -= Time.deltaTime;
+            yield return null;            
+        }
+        _videoPlayer.Stop();
     }
 
     private IEnumerator WaitToNextScene()
