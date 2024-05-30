@@ -40,8 +40,9 @@ public class VidPlayer : MonoBehaviour
             _videoPlayer.url = videoPath;
             _videoPlayer.Play();
         }
-        
+
         if (isEnding) StartCoroutine(WaitToNextScene());
+        else StartCoroutine(WaitToNextVideo());
     }
 
     private IEnumerator WaitToNextVideo()

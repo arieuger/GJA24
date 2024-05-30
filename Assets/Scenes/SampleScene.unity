@@ -604,7 +604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -1663,7 +1663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -2471,7 +2471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -3126,7 +3126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -3984,7 +3984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -4523,7 +4523,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -4810,7 +4810,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -6284,7 +6284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -6570,7 +6570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
@@ -6915,7 +6915,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: destructionTime
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 915096048808004116, guid: a845ba9be59d1d3bfb9f16d68d15ed8e, type: 3}
       propertyPath: fallingBuildingSound
