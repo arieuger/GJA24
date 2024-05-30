@@ -168,6 +168,8 @@ MonoBehaviour:
   notBeingDestructedColor: {r: 0.21960784, g: 0.65882355, b: 0.90588236, a: 0.5411765}
   beingDestructedColor: {r: 0.93333334, g: 0.07843137, b: 0.2339935, a: 0.5411765}
   destructionZoneSquare: {fileID: 3194661879613349317}
+  fallingBuildingSound: {fileID: 0}
+  destroyedBuildingSound: {fileID: 0}
 --- !u!50 &1747395003876740071
 Rigidbody2D:
   serializedVersion: 4
@@ -376,7 +378,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!114 &5578583103112199289
 MonoBehaviour:

@@ -157,9 +157,9 @@ public class Police : MonoBehaviour
         while (true)
         {
 
-            if (Random.value > 0.8f && FindObjectsByType<Police>(FindObjectsSortMode.None).Length > 1)
+            if (Random.value > 0.85f /*&& FindObjectsByType<Police>(FindObjectsSortMode.None).Length > 1*/)
             {
-                _agent.destination = Random.insideUnitCircle * 15f;
+                _agent.destination = FindRandomPoint();
                 yield return new WaitForSeconds(3f);
             }
             
@@ -170,6 +170,16 @@ public class Police : MonoBehaviour
             }
             else yield return null;
         }
+    }
+
+    private Vector2 FindRandomPoint()
+    {
+        float y = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y, 
+            Camera.main.ScreenToWorldPoint(new Vector2(0, Screen.height)).y);
+        float x = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x, 
+            Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x);
+
+        return new Vector2(x, y);
     }
     
 }
