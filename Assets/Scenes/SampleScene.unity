@@ -3790,6 +3790,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c443fc1f234a36ee88df698610509705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smokeParticlesPrefab: {fileID: 4677348221581861047, guid: 69b461d35ca1be6c5960d57945e75430, type: 3}
 --- !u!1 &1107737782
 GameObject:
   m_ObjectHideFlags: 0
