@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,19 +57,24 @@ public class Building : MonoBehaviour
         {
             destroyedBuildingSound.Play();
             Destroy(gameObject);
-            _explodingBuildParticles =
-                Instantiate(explodingBuildParticlesPrefab, transform.position, Quaternion.identity);
-            
-            _explodingBuildParticles.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(p => p.Play());
-            
-            NavMeshManager.Instance.UpdateNavMesh();
+
             if (FindObjectsByType<Building>(FindObjectsSortMode.None).Length == 1)
             {
                 GameManager.Instance.EndGame(true);
             }
         }
     }
-    
+
+    private void OnDestroy()
+    {
+        CameraShake.Instance.ShakeCamera();
+            
+        _explodingBuildParticles = Instantiate(explodingBuildParticlesPrefab, transform.position, Quaternion.identity);
+        _explodingBuildParticles.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(p => p.Play());
+            
+        NavMeshManager.Instance.UpdateNavMesh();
+    }
+
     public void StopDestruction()
     {
         StopCoroutine(_destructionCo);
