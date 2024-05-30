@@ -946,7 +946,7 @@ PolygonCollider2D:
       - {x: 1.4884894, y: -0.34705585}
       - {x: 1.0707197, y: -0.029702365}
       - {x: 0.26124418, y: -0.44570345}
-      - {x: -0.3899321, y: -0.4589833}
+      - {x: -0.37567443, y: -0.46763623}
       - {x: -1.2734566, y: -0.80535376}
   m_UseDelaunayMesh: 0
 --- !u!1 &386775048
@@ -3691,9 +3691,9 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.952559, y: -1.1677625}
+    - - {x: -0.932219, y: -1.0467412}
       - {x: -0.39295018, y: -1.3776402}
-      - {x: 0.7009914, y: -1.8165237}
+      - {x: 0.7809713, y: -1.6841007}
       - {x: 1.7275362, y: -1.5568764}
       - {x: -1.062953, y: -0.30964267}
   m_UseDelaunayMesh: 0
@@ -5917,7 +5917,6 @@ GameObject:
   - component: {fileID: 1575459131}
   - component: {fileID: 1575459132}
   - component: {fileID: 1575459133}
-  - component: {fileID: 1575459134}
   - component: {fileID: 1575459135}
   m_Layer: 0
   m_Name: 2-Carreteras
@@ -6171,22 +6170,6 @@ PolygonCollider2D:
       - {x: 1.1386309, y: 1.2533437}
       - {x: -1.2378887, y: 1.1780205}
   m_UseDelaunayMesh: 0
---- !u!114 &1575459134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1575459130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 1
-  m_Area: 3
-  m_IgnoreFromBuild: 0
-  m_AffectedAgents: ffffffff
 --- !u!95 &1575459135
 Animator:
   serializedVersion: 5
@@ -6918,7 +6901,7 @@ PolygonCollider2D:
     m_Paths:
     - - {x: -1.5632246, y: -1.5347105}
       - {x: -0.82184947, y: -1.0955625}
-      - {x: 0.77632594, y: -0.94611406}
+      - {x: 0.65558434, y: -0.8460398}
       - {x: 1.6656151, y: -0.4449138}
       - {x: -1.0733514, y: -0.48058236}
   m_UseDelaunayMesh: 0
@@ -7206,7 +7189,7 @@ PolygonCollider2D:
     - - {x: -1.330071, y: -1.7592556}
       - {x: 0.1318903, y: -1.8245422}
       - {x: 0.6982758, y: -1.5052947}
-      - {x: 1.4280591, y: -0.8372297}
+      - {x: 1.1697493, y: -1.146068}
       - {x: -0.3168143, y: -0.45258445}
       - {x: -1.2310761, y: -0.9703578}
   m_UseDelaunayMesh: 0
