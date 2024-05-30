@@ -18,7 +18,7 @@ public class CameraShake : MonoBehaviour
 
     public void ShakeCamera()
     {
-        StartCoroutine(Shake());
+        if (gameObject) StartCoroutine(Shake());
     }
     
     private IEnumerator Shake()
@@ -28,18 +28,15 @@ public class CameraShake : MonoBehaviour
         
         while (remainingTime > 0f)
         {
-            Debug.Log(remainingTime);
             float x = Random.Range(-1f, 1f) * magnitude;
             float y = Random.Range(-1f, 1f) * magnitude;
 
             cam.transform.position = new Vector3(x, y, -10f);
             remainingTime -= Time.deltaTime;
             
-            Debug.Log(remainingTime);
             
             yield return null;
         }
-        Debug.Log("Holi");
         cam.transform.position = orignalPosition;
     }
 }

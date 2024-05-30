@@ -56,6 +56,11 @@ public class Building : MonoBehaviour
         if (_remainingDestruction <= 0.01f)
         {
             destroyedBuildingSound.Play();
+            if (CameraShake.Instance.gameObject != null) CameraShake.Instance.ShakeCamera();
+            _explodingBuildParticles = Instantiate(explodingBuildParticlesPrefab, transform.position, Quaternion.identity);
+            _explodingBuildParticles.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(p => p.Play());
+            
+            NavMeshManager.Instance.UpdateNavMesh();
             Destroy(gameObject);
 
             if (FindObjectsByType<Building>(FindObjectsSortMode.None).Length == 1)
@@ -63,16 +68,6 @@ public class Building : MonoBehaviour
                 GameManager.Instance.EndGame(true);
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        CameraShake.Instance.ShakeCamera();
-            
-        _explodingBuildParticles = Instantiate(explodingBuildParticlesPrefab, transform.position, Quaternion.identity);
-        _explodingBuildParticles.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(p => p.Play());
-            
-        NavMeshManager.Instance.UpdateNavMesh();
     }
 
     public void StopDestruction()

@@ -32,7 +32,7 @@ public class PlayerShovel : MonoBehaviour
         {
             if (IsDestructing)
             {
-                _smokeParticles.Stop();
+                if (_smokeParticles) _smokeParticles.Stop();
                 var building = other.gameObject.GetComponentInParent<Building>();
                 if (building != null)
                 {
