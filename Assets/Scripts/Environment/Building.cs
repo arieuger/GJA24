@@ -9,8 +9,6 @@ public class Building : MonoBehaviour
 
     [SerializeField] private float destructionTime = 2f;    // TODO: Convertir a segundos
     [SerializeField] private Image fillImage;
-    [SerializeField] private Color notBeingDestructedColor;
-    [SerializeField] private Color beingDestructedColor;
     [SerializeField] private SpriteRenderer destructionZoneSquare;
 
     private float _remainingDestruction;
@@ -38,17 +36,14 @@ public class Building : MonoBehaviour
         {
             if (!PlayerMovement.Instance.isBlocked && !PlayerMovement.Instance.isBeingCharged)
             {
-                if (destructionZoneSquare.color != beingDestructedColor) destructionZoneSquare.color = beingDestructedColor;
-                
                 float lerp = Mathf.PingPong(Time.time, 0.25f);
                 GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, lerp);
                 
                 _remainingDestruction -= Time.deltaTime / destructionTime;
                 fillImage.fillAmount = _remainingDestruction / destructionTime;
                 
-            } else if (destructionZoneSquare.color != notBeingDestructedColor)
+            } else if (GetComponent<SpriteRenderer>().color != Color.white)
             {
-                destructionZoneSquare.color = notBeingDestructedColor;
                 GetComponent<SpriteRenderer>().color = Color.white;
             }
             
@@ -71,7 +66,6 @@ public class Building : MonoBehaviour
     {
         StopCoroutine(_destructionCo);
         fallingBuildingSound.Pause();
-        destructionZoneSquare.color = notBeingDestructedColor;
         GetComponent<SpriteRenderer>().color = Color.white;
     }
     
