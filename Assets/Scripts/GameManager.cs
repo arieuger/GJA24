@@ -6,12 +6,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Image pauseBackgroundImage;
     [SerializeField] private GameObject menuPanel;
+
+    [SerializeField] private GameObject policePrefab;
+    [SerializeField] private List<Transform> policeInstantiationPoints;
 
     // MUSIC
     [SerializeField] private AudioSource mainMusic;
@@ -38,6 +42,7 @@ public class GameManager : MonoBehaviour
         pauseMenuMusic.ignoreListenerPause = true;
         pauseMenuSound.ignoreListenerPause = true;
         StartCoroutine(UtilsClass.StartMusic(mainMusic));
+        StartCoroutine(InstantiatePolice());
     }
 
     void Update()
@@ -60,11 +65,21 @@ public class GameManager : MonoBehaviour
             int seconds = Mathf.FloorToInt(_timer % 60F);
             string timeText = minutes.ToString ("0") + ":" + seconds.ToString ("00");
             timerText.text = timeText;
-
+            
             if (_timer <= 5)
             {
                 EndGame();
             }
+        }
+    }
+
+    private IEnumerator InstantiatePolice()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(90f);
+            if (Playing) Instantiate(policePrefab,
+                policeInstantiationPoints[Random.Range(0, policeInstantiationPoints.Count)].position, Quaternion.identity);
         }
     }
 

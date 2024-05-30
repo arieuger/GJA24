@@ -31,6 +31,7 @@ public class Police : MonoBehaviour
     
     private void Start()
     {
+        
         _agent = GetComponent<NavMeshAgent>();
         _agent.updateRotation = false;
         _agent.updateUpAxis = false;
@@ -152,12 +153,12 @@ public class Police : MonoBehaviour
 
     private IEnumerator StartChasingPlayer()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         while (true)
         {
 
-            if (Random.value > 0.95f /*&& FindObjectsByType<Police>(FindObjectsSortMode.None).Length > 1*/)
+            if (Random.value > 0.99f && FindObjectsByType<Police>(FindObjectsSortMode.None).Length > 1)
             {
                 _agent.destination = FindRandomPoint();
                 yield return new WaitForSeconds(3f);
