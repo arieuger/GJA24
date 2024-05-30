@@ -40,12 +40,16 @@ public class Building : MonoBehaviour
             {
                 if (destructionZoneSquare.color != beingDestructedColor) destructionZoneSquare.color = beingDestructedColor;
                 
+                float lerp = Mathf.PingPong(Time.time, 0.25f);
+                GetComponent<SpriteRenderer>().color = Color.Lerp(Color.white, Color.red, lerp);
+                
                 _remainingDestruction -= Time.deltaTime / destructionTime;
                 fillImage.fillAmount = _remainingDestruction / destructionTime;
                 
             } else if (destructionZoneSquare.color != notBeingDestructedColor)
             {
                 destructionZoneSquare.color = notBeingDestructedColor;
+                GetComponent<SpriteRenderer>().color = Color.white;
             }
             
             yield return null;
@@ -68,6 +72,7 @@ public class Building : MonoBehaviour
         StopCoroutine(_destructionCo);
         fallingBuildingSound.Pause();
         destructionZoneSquare.color = notBeingDestructedColor;
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
     
     
