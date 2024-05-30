@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9f84271197843e2badb76b1c176241c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explodingBuildParticlesPrefab: {fileID: 7006182860927520787, guid: 9cbdbc877d05cb19ba3b33bf880cc31b, type: 3}
   destructionTime: 2
   fillImage: {fileID: 4387757913871919480}
-  destructionZoneSquare: {fileID: 0}
   fallingBuildingSound: {fileID: 0}
   destroyedBuildingSound: {fileID: 0}
 --- !u!50 &1747395003876740071

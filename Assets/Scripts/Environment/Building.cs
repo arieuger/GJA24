@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -7,12 +8,13 @@ using UnityEngine.UI;
 public class Building : MonoBehaviour
 {
 
+    [SerializeField] private GameObject explodingBuildParticlesPrefab;
     [SerializeField] private float destructionTime = 2f;    // TODO: Convertir a segundos
     [SerializeField] private Image fillImage;
-    [SerializeField] private SpriteRenderer destructionZoneSquare;
 
     private float _remainingDestruction;
     private IEnumerator _destructionCo;
+    private GameObject _explodingBuildParticles;
     
     // SOUNDS
     [SerializeField] private AudioSource fallingBuildingSound;
@@ -54,6 +56,11 @@ public class Building : MonoBehaviour
         {
             destroyedBuildingSound.Play();
             Destroy(gameObject);
+            _explodingBuildParticles =
+                Instantiate(explodingBuildParticlesPrefab, transform.position, Quaternion.identity);
+            
+            _explodingBuildParticles.GetComponentsInChildren<ParticleSystem>().ToList().ForEach(p => p.Play());
+            
             NavMeshManager.Instance.UpdateNavMesh();
             if (FindObjectsByType<Building>(FindObjectsSortMode.None).Length == 1)
             {

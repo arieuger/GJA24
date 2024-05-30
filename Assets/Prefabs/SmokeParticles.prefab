@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8568548800817408846}
   - component: {fileID: 5166054630155373285}
   m_Layer: 0
-  m_Name: Particles
+  m_Name: SmokeParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4677348221581861047}
   serializedVersion: 8
-  lengthInSec: 5.23
+  lengthInSec: 2.5
   simulationSpeed: 1
   stopAction: 2
   cullingMode: 0
@@ -944,7 +944,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.5
+      scalar: 1
       minScalar: 10
       maxCurve:
         serializedVersion: 2
