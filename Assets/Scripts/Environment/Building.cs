@@ -35,6 +35,12 @@ public class Building : MonoBehaviour
 
     private IEnumerator StartDestructionCo()
     {
+        
+        FindObjectsByType<Building>(FindObjectsSortMode.None).ToList().ForEach(b =>
+        {
+            if (!b.gameObject.name.Equals(gameObject.name)) b.StopDestruction();
+        });
+        
         while (_remainingDestruction > 0)
         {
             if (!PlayerMovement.Instance.isBlocked && !PlayerMovement.Instance.isBeingCharged)
